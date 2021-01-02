@@ -116,8 +116,8 @@ class CartController extends BaseController
             return $this->sendResponse(new CartResource($cart), "Cart has been edited.");
         } catch (\Exception $e) {
             DB::rollback(); // if there is an error, rollback data from database
-            // return $this->sendError('Internal Server Error.', 'Contact the administrator to tell about this error.', 500);
-            return $this->sendError('Internal Server Error.', $cart, 500);
+            return $this->sendError('Internal Server Error.', 'Contact the administrator to tell about this error.', 500);
+            // return $this->sendError('Internal Server Error.', $cart, 500);
         }
     }
 
