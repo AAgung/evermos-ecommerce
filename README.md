@@ -16,8 +16,8 @@ Harus ada proses validasi untuk pengecekan stok pada sistem ketika customer mena
     - DB_DATABASE: database_name
     - DB_USERNAME: database_username
     - DB_PASSWORD: database_password
-4. ketikkan 'php artisan migrate:fresh --seed' pada Terminal / CMD / Git Bash
-5. ketikkan 'php artisan serve' pada Terminal / CMD / Git Bash untuk memulai server
+4. ketikkan 'php artisan migrate:fresh --seed' pada Terminal / CMD / Git Bash pada root project folder
+5. ketikkan 'php artisan serve' pada Terminal / CMD / Git Bash pada root project folder untuk memulai server
 
 ## API ENDPOINTS
 
@@ -31,6 +31,6 @@ https://documenter.getpostman.com/view/3619632/TVt2cNye#89323dd1-fef0-49ab-93f1-
 
 ## TESTING
 
--   untuk testing solusi, ketikkan perintah:
+-   untuk testing solusi, ketikkan perintah pada root project folder:
     'vendor\bin\phpunit --filter=CartTest' untuk windows
     'vendor/bin/phpunit --filter=CartTest' untuk linux
