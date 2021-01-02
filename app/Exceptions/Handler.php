@@ -55,9 +55,9 @@ class Handler extends ExceptionHandler
             if ($request->is('api/*')) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Not Found',
-                    'data' => 'Data tidak ditemukan.',
-                ]);
+                    'message' => 'Data is not found',
+                    'data' => null,
+                ], 404);
             } else {
                 // return HTML response
             }

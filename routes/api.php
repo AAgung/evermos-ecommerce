@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::prefix('master')->group(function() {
+    Route::apiResource('product', 'Api\v1\ProductController');
+});
 
 Route::prefix('transaction')->group(function() {
     Route::apiResource('cart', 'Api\v1\transaction\CartController');
