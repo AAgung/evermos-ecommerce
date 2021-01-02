@@ -28,6 +28,22 @@ class Product extends BaseModel
         return 'uid';
     }
 
+    /**
+     * Scope a query to only include available stock.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAvailable($query)
+    {
+        return $query->where('stock', '>', 0);
+    }
+
+    public function scopeUnavailable($query)
+    {
+        return $query->where('stock', '<=', 0);
+    }
+
     public function category()
     {
         return $this->belongsTo(ProductCategory::class, 'category_id');
@@ -37,7 +53,6 @@ class Product extends BaseModel
     {
         return $this->belongsTo(ProductUnit::class, 'unit_id');
     }
-
     
     /**
      * get available stock product (calculate from stock in table t_barang - total qty in table t_cart that still in order)

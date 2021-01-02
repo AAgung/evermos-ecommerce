@@ -55,8 +55,6 @@ class CartController extends BaseController
 
         DB::beginTransaction();
         try {
-            $message = "Data has been added to cart";
-
             $input['uid'] = Str::uuid();
             unset($input['product_uid']);
             
@@ -70,10 +68,8 @@ class CartController extends BaseController
             $cart->product()->associate($product);
             $cart->save();
 
-            $message = "{$product->name} has been added to cart";
-
             DB::commit(); // if there is no error, commit data to database
-            return $this->sendResponse(new CartResource($cart), $message, 201);
+            return $this->sendResponse(new CartResource($cart), "{$product->name} has bedd added to cart.", 201);
         } catch (\Exception $e) {
             DB::rollback(); // if there is an error, rollback data from database
             // return $this->sendError('Internal Server Error.', 'Contact the administrator to tell about this error.', 500);
@@ -109,9 +105,7 @@ class CartController extends BaseController
         }
         
         DB::beginTransaction();
-        try {
-            $message = "Data has been added to cart";
-            
+        try {            
             $product = Product::where('id', $cart->product_id)->first();
             $product->stock = Product::getAvailableStock($product); // get available stock 
 
@@ -119,11 +113,11 @@ class CartController extends BaseController
             $cart->update($input);
             
             DB::commit(); // if there is no error, commit data to database
-            return $this->sendResponse(new CartResource($cart), $message);
+            return $this->sendResponse(new CartResource($cart), "Cart has been edited.");
         } catch (\Exception $e) {
             DB::rollback(); // if there is an error, rollback data from database
             // return $this->sendError('Internal Server Error.', 'Contact the administrator to tell about this error.', 500);
-            return $this->sendError('Internal Server Error.', $e->getMessage(), 500);
+            return $this->sendError('Internal Server Error.', $cart, 500);
         }
     }
 
@@ -148,7 +142,7 @@ class CartController extends BaseController
      * @param  \App\Models\transaction\Cart  $cart
      */
     private function _validationForm($input = [], $cart = null) {
-        $rules = ['qty' => 'required|numeric'];
+        $rules = ['qty' => 'required|min:1|numeric'];
         if (!$cart) {
             $rules['product_uid'] = 'required|exists:'.Product::class.',uid';
             $rules['price'] = 'required|numeric';
